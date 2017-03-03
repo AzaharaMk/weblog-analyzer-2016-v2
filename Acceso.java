@@ -1,22 +1,27 @@
 public class Acceso
 {
-    private int ano;
+    private String ip;
+    private String ano;
     private int mes;
     private int dia;
     private int hora;
-    private int minutos;
-    
+    private String minutos;
+    private String paginaWeb;
+    private int codigoRespuesta;
     public Acceso(String lineaLeida)
     {
         String[] elementosLinea = lineaLeida.split(" ");
-        ano = Integer.parseInt(elementosLinea[0]);
-        mes = Integer.parseInt(elementosLinea[1]);
-        dia = Integer.parseInt(elementosLinea[2]);
-        hora = Integer.parseInt(elementosLinea[3]);
-        minutos = Integer.parseInt(elementosLinea[4]);
+        ip = elementosLinea[0];
+        ano = elementosLinea[1].substring(1,5);
+        mes = Integer.parseInt(elementosLinea[2]);
+        dia = Integer.parseInt(elementosLinea[3]);
+        hora = Integer.parseInt(elementosLinea[4]);
+        minutos = elementosLinea[5].substring(0,2);
+        paginaWeb = elementosLinea[6];
+        codigoRespuesta = Integer.parseInt(elementosLinea[7]);
     }
     
-    public int getAno() 
+    public String getAno() 
     {
         return ano;
     }
@@ -36,7 +41,7 @@ public class Acceso
         return hora;
     }
     
-    public int getMinutos()
+    public String getMinutos()
     {
         return minutos;
     }
