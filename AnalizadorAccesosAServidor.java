@@ -1,18 +1,18 @@
 import java.io.File;
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public class AnalizadorAccesosAServidor
 {
     private ArrayList<Acceso> accesos;
-    
-    
+
     public AnalizadorAccesosAServidor() 
     {
         accesos = new ArrayList<>();
     }
-    
-    
+
     public void analizarArchivoDeLog(String archivo)
     {
         accesos.clear();
@@ -30,20 +30,19 @@ public class AnalizadorAccesosAServidor
             System.out.println("Ocurrio algun error al leer el archivo.");
         }
     }
-    
-    
+
     public int obtenerHoraMasAccesos() 
     {
         int valorADevolver = -1;
-        
+
         if (!accesos.isEmpty()) {
             int[] accesosPorHora = new int[24];
-    
+
             for (Acceso accesoActual : accesos) {
                 int horaAccesoActual = accesoActual.getHora();
                 accesosPorHora[horaAccesoActual] = accesosPorHora[horaAccesoActual] + 1;
             }
-            
+
             int numeroDeAccesosMasAlto = accesosPorHora[0];
             int horaDeAccesosMasAlto = 0;
             for (int i = 0; i < accesosPorHora.length; i++) {
@@ -52,24 +51,50 @@ public class AnalizadorAccesosAServidor
                     horaDeAccesosMasAlto = i;
                 }
             }
-            
+
             valorADevolver = horaDeAccesosMasAlto;                      
         }
-        
+
         return valorADevolver;
     }
 
-    
-    
     public String paginaWebMasSolicitada() 
     {
-        return "";
+        String paginaActual="";
+        String paginaMasVisitada = null;
+
+        for(Acceso accesoActual: accesos)
+        {
+            String paginaWebActual=accesoActual.getPaginaWeb();
+            paginaActual = paginaWebActual;
+        }
+
+        //Hash Map en el que se va guardando las pagina web
+        Map<String, Integer> paginaMasSolicitada = new HashMap<String,Integer>();
+
+        if(!accesos.isEmpty())
+        {
+            for(int i =0; i < paginaMasSolicitada.size();i++)
+            {
+                if(paginaMasSolicitada.containsKey(paginaActual) !=true)
+                {
+                    paginaMasSolicitada.put(paginaActual,1);
+                }
+                else
+                {
+                    paginaMasSolicitada.put(paginaActual,paginaMasSolicitada.get(paginaActual)+1);
+                }
+
+                paginaMasVisitada = "";
+
+            } 
+        }
+        return paginaMasVisitada;
     }
-    
+
     public String clienteConMasAccesosExitosos()
     {
         return "";
     }
-
 
 }
